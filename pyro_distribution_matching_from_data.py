@@ -1,6 +1,6 @@
 """Example illustrating how to train a parameterized distribution from some observed data.
 
-The observed data correspond to the observable variables. The rest are the unobserved. The goal is to define
+The observed data correspond to the observable variables; The rest are the unobserved. The goal is to define
 a prior distribution over the unobservable (latent) variables and try to find the posterior over them.
 """
 
@@ -42,7 +42,7 @@ def driver(data):
     The name of the samples of the unobserved variables (m0, m1) must match with the corresponding name
     in the parameterized function afterwards.
 
-    Intuition: This is the posterior distribution.
+    Intuition: This is the joint distribution P(x2,m0,m1) = prod_over_i(P(x2^(i)|m0,m1,x1^(i)) * p(m0) * p(m1)
 
     :param data: the set of observed data points
     """
@@ -67,7 +67,7 @@ def parameterized(data):
     (i)  Initializes the parameters that will be optimized through the training process.
     (ii) Generates samples from the parameterized distribution
 
-    Intuition: This is a parameterized distribution that will try to match the posterior.
+    Intuition: This is a parameterized posterior distribution P(m0,m1|x2;params), that will try to match the true posterior.
 
     :param data: the set of observed data points
     """

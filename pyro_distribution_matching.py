@@ -43,7 +43,7 @@ def generative_process():
     return [x1, x2]
 
 
-def driver_dist(x1):
+def driver(x1):
     """
     Returns a sample from the driver distribution P(x2|x1).
 
@@ -57,15 +57,15 @@ def driver_dist(x1):
     return x2
 
 
-def parameterized_dist(x1):
+def parameterized(x1):
     """
     Returns a sample from the parameterized distribution P(x2|x1;m0,s0,m1,s1).
 
     :param x1: binary variable
     :return: x2
     """
-    m0 = pyro.param('m0', torch.tensor(10.))
-    m1 = pyro.param('m1', torch.tensor(10.))
+    m0 = pyro.param('m0', torch.tensor(0.))
+    m1 = pyro.param('m1', torch.tensor(0.))
 
     s0 = pyro.param('s0', torch.tensor(1.))
     s1 = pyro.param('s1', torch.tensor(1.))
@@ -78,8 +78,8 @@ def parameterized_dist(x1):
 
 
 # defines the svi training mechanism
-svi = pyro.infer.SVI(model=driver_dist,
-                     guide=parameterized_dist,
+svi = pyro.infer.SVI(model=driver,
+                     guide=parameterized,
                      optim=pyro.optim.SGD({"lr": 0.01, "momentum": 0.1}),
                      loss=pyro.infer.Trace_ELBO())
 
